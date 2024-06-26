@@ -1,7 +1,5 @@
 plugins {
     alias(libs.plugins.kotlin.jvm) apply false
-
-    alias(libs.plugins.dependency.analysis)
 }
 
 subprojects {
@@ -16,22 +14,6 @@ subprojects {
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
         kotlinOptions.jvmTarget = JavaVersion.VERSION_21.toString()
         kotlinOptions.javaParameters = true
-    }
-}
-
-dependencyAnalysis {
-    issues {
-        all {
-            onAny {
-                severity("fail")
-            }
-            // quarkus generates these source sets that we don't need/want to analysis
-            ignoreSourceSet(
-                "native-test",
-                "quarkus-generated-sources",
-                "quarkus-test-generated-sources"
-            )
-        }
     }
 }
 
